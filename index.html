@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RadCrop - 辐射作物自动化农场</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/main.css?v=4">
+</head>
+<body>
+    <div id="topBar" class="topBar">
+        <h1>RadCrop</h1>
+    </div>
+
+    <div id="main" class="main">
+        <div class="columns is-gapless">
+            <div class="column is-one-quarter leftColumn">
+                <div class="panel">
+                    <h2>农场概览</h2>
+                    <div id="farm-overview-container"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>基础资源</h2>
+                    <div id="inventory-container">
+                        <div class="inventory-item">
+                            <span>信息：</span>
+                            <span id="token-display">0</span>
+                            <span>tokens</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span>能量：</span>
+                            <span id="energy-count">0</span>
+                            <span>太焦</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span>物质：</span>
+                            <span id="material-count">0</span>
+                            <span>太克</span>
+                        </div>
+                        <div class="inventory-item">
+                            <button class="btn harvest-btn" id="recharge-btn">充值</button>
+                            <button class="btn harvest-btn" id="emit-btn">排放</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2>仓库</h2>
+                    <div id="warehouse-container"></div>
+                </div>
+            </div>
+
+            <div id="mainColumn" class="column is-three-quarters">
+                <div class="tabs-container">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="plots">土地管理</button>
+                        <button class="tab-btn" data-tab="buildings">建筑管理</button>
+                        <button class="tab-btn" data-tab="tech">科技管理</button>
+                        <button class="tab-btn" data-tab="archive">存档管理</button>
+                    </div>
+                    <div class="tab-content">
+                        <div id="tab-plots" class="tab-panel active">
+                            <div class="plots-grid" id="plots-grid"></div>
+                        </div>
+                        <div id="tab-buildings" class="tab-panel">
+                            <div class="building-tabs">
+                                <div class="building-tab-buttons">
+                                    <button class="building-tab-btn active" data-building-tab="ai">人工智能</button>
+                                    <button class="building-tab-btn" data-building-tab="megastructure" id="megastructure-tab-btn">能源巨构</button>
+                                </div>
+                                <div class="building-tab-content">
+                                    <div id="building-ai" class="building-tab-panel active">
+                                        <div class="buildings-grid" id="buildings-grid"></div>
+                                    </div>
+                                    <div id="building-megastructure" class="building-tab-panel">
+                                        <div class="building-card" id="energy-refine-card">
+                                            <h3>能量提炼装置</h3>
+                                            <div class="effect-desc">消耗 1 能量获得 1 物质</div>
+                                            <button class="btn" id="refine-energy-btn">提炼</button>
+                                        </div>
+                                        <div class="buildings-grid" id="megastructure-grid"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-tech" class="tab-panel">
+                            <div class="tech-tabs">
+                                <div class="tech-tab-buttons">
+                                    <button class="tech-tab-btn active" data-tech-tab="agri">农业科技</button>
+                                    <button class="tech-tab-btn" data-tech-tab="industry">工业科技</button>
+                                    <button class="tech-tab-btn" data-tech-tab="gene">基因科技</button>
+                                    <button class="tech-tab-btn" data-tech-tab="culture">文化艺术</button>
+                                </div>
+                                <div class="tech-tab-content">
+                                    <div id="tech-agri" class="tech-tab-panel active"></div>
+                                    <div id="tech-industry" class="tech-tab-panel"></div>
+                                    <div id="tech-gene" class="tech-tab-panel"></div>
+                                    <div id="tech-culture" class="tech-tab-panel"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-archive" class="tab-panel">
+                            <div class="archive-content">
+                                <div class="archive-section">
+                                    <h3>本地存储</h3>
+                                    <div class="archive-buttons">
+                                        <button class="btn" id="save-btn-main">保存游戏</button>
+                                        <button class="btn" id="load-btn-main">加载存档</button>
+                                        <button class="btn" id="reset-btn-main">重置游戏</button>
+                                    </div>
+                                </div>
+                                <div class="archive-section">
+                                    <h3>文件导入/导出</h3>
+                                    <div class="archive-buttons">
+                                        <button class="btn" id="export-file-btn">导出到文件</button>
+                                        <button class="btn" id="import-file-btn">从文件导入</button>
+                                    </div>
+                                </div>
+                                <div class="archive-section">
+                                    <h3>存档数据</h3>
+                                    <textarea id="save-textarea" placeholder="存档数据将显示在这里..."></textarea>
+                                    <div class="archive-buttons">
+                                        <button class="btn" id="export-text-btn">导出到文本框</button>
+                                        <button class="btn" id="import-text-btn">从文本框导入</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-one-quarter rightColumn">
+                <div class="panel">
+                    <h2>游戏日志</h2>
+                    <div class="log-container" id="log-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
